@@ -12,7 +12,9 @@ cursor.execute("""
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
-    price REAL
+    price REAL,
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (id)
   )
 
 """)
@@ -63,7 +65,8 @@ def delete(id):
   conn = sqlite3.connect('database.db')
   cursor = conn.cursor()
   cursor.execute(
-    'DELETE FROM products WHERE id = ?', (id, )
+    'DELETE FROM products WHERE id = ? AND user_id = ?', 
+    (id,session['user_id'])
     )
 
   conn.commit()
