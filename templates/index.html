@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Products list</title>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+
+<body>
+	<div class="container">
+    <a href="/logout">Logout</a>
+		<h1>Products</h1>
+		<form action="/create" method="POST">
+			<input name="title" placeholder="Product">
+      <input name="price" placeholder="Price">
+      <button type="submit">
+        <img src="{{ url_for('static', filename='images/icons/add.png') }}">
+      </button>
+    </form>
+  <hr>
+  <ul>
+  {% for product in products %}
+    <li>
+      <form action="/update/{{ product[0] }}" method="POST">
+            <input name="title" value="{{ product[1] }}">
+            <button type="submit">
+              <img src="{{ url_for('static', filename='images/icons/edit.png') }}">
+            </button>
+
+            <input name="price" value="{{product[2]}}">
+            <button type="submit">
+              <img src="{{ url_for('static', filename='images/icons/edit.png') }}">
+            </button>
+      </form>
+        <div class="actions">
+          <a href="/delete/{{ product[0] }}">
+          <img src="{{ url_for('static', filename='images/icons/remove.png') }}">
+          </a>
+        </div>
+    </li>
+  {% endfor %}
+  </ul>
+  <form action="/search" method="POST">
+      <input name="title" placeholder="Escreva o nome do produto">
+      <button type="submit">
+        Buscar
+      </button>
+  </form>   
+  </div>
+</body>
+</html>
